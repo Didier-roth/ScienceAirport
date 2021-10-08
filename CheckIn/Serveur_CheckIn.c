@@ -15,10 +15,6 @@
 #include "CIMP.h"
 
 
-#define NB_MAX_CLIENTS 2 /* Nombre maximum de clients connectes */
-#define EOC -1
-#define DOC "DENY_OF_CONNEXION"
-
 #define affThread(num, msg) printf("th_%s> %s\n", num, msg)
 
 pthread_mutex_t mutexIndiceCourant;
@@ -36,6 +32,8 @@ int verifyLogin(char* id, char* mdp);
 int verifyTicket(char* numBillet, int nbAccompagnants);
 void saveValises(char* numBillet, int vecValses[], int nbValises);
 void viderBuffIn();
+
+void HandlerInt(int);
 
 struct trameCIMP trameClient;
 struct trameCIMP trameServeur;
@@ -55,7 +53,7 @@ int main()
 	struct sockaddr_in adresseSocket;
 	int tailleSockaddr_in;
 	int ret, * retThread;
-	char msgServeur[MAXSTRING];
+
 
 	/* 1. Initialisations */
 	puts("* Thread principal serveur demarre *");
@@ -66,6 +64,7 @@ int main()
 	/* Si la socket n'est pas utilisee, le descripteur est a -1 */
 	for (i=0; i<NB_MAX_CLIENTS; i++) hSocketConnectee[i] = -1;
 
+
 	/* 2. Creation de la socket d'ecoute */
 	hSocketEcoute = socket(AF_INET,SOCK_STREAM,0);
 	if (hSocketEcoute == -1)
@@ -75,6 +74,7 @@ int main()
 	}
 	else printf("Creation de la socket OK\n");
 	
+
 	/* 3. Acquisition des informations sur l'ordinateur local */
 	if ( (infosHost = gethostbyname("moon"))==0)
 	{
@@ -86,11 +86,13 @@ int main()
 	memcpy(&adresseIP, infosHost->h_addr, infosHost->h_length);
 	printf("Adresse IP = %s\n",inet_ntoa(adresseIP));
 
+
 	/* 4. Préparation de la structure sockaddr_in */
 	memset(&adresseSocket, 0, sizeof(struct sockaddr_in));
 	adresseSocket.sin_family = AF_INET;
 	adresseSocket.sin_port = htons(PORT_CHCK);
 	memcpy(&adresseSocket.sin_addr, infosHost->h_addr, infosHost->h_length);
+
 
 	/* 5. Le système prend connaissance de l'adresse et du port de la socket */
 	if (bind(hSocketEcoute, (struct sockaddr *)&adresseSocket,
@@ -101,6 +103,7 @@ int main()
 	}
 	else printf("Bind adresse et port socket OK\n");
 
+
 	/* 6. Lancement des threads */
 	for (i=0; i<NB_MAX_CLIENTS; i++)
 	{
@@ -108,6 +111,7 @@ int main()
 		printf("Thread secondaire %d lance !\n", i);
 		ret = pthread_detach(threadHandle[i]);
 	}
+
 	do
 	{
 		/* 7. Mise a l'ecoute d'une requete de connexion */
@@ -119,6 +123,7 @@ int main()
 			exit(1);
 		}
 		else printf("Listen socket OK\n");
+
 
 		/* 8. Acceptation d'une connexion */
 		tailleSockaddr_in = sizeof(struct sockaddr_in);
@@ -132,6 +137,7 @@ int main()
 		}
 		else printf("Accept socket OK\n");
 
+
 		/* 9. Recherche d'une socket connectee libre */
 		printf("Recherche d'une socket connecteee libre ...\n");
 		for (j=0; j<NB_MAX_CLIENTS && hSocketConnectee[j] !=-1; j++);
@@ -139,9 +145,9 @@ int main()
 		if (j == NB_MAX_CLIENTS)
 		{
 			printf("Plus de connexion disponible\n");
-			sprintf(msgServeur,DOC);
+			sprintf(trameServeur.DATA.message,DOC);
 
-			if (send(hSocketService, msgServeur, MAXSTRING, 0) == -1)
+			if (send(hSocketService, &trameServeur, MAXSTRING, 0) == -1)
 			{
 				printf("Erreur sur le send de refus%d\n", errno);
 				close(hSocketService); /* Fermeture de la socket */
@@ -150,7 +156,7 @@ int main()
 			else printf("Send socket refusee OK");
 
 			close(hSocketService); /* Fermeture de la socket */
-			}
+		}
 		else
 		{
 			/* Il y a une connexion de libre */
@@ -177,7 +183,7 @@ int main()
 void * fctThread (void *param)
 {
 	char * nomCli, *buf = (char*)malloc(100);
-	char msgClient[MAXSTRING], msgServeur[MAXSTRING];
+	//char msgClient[MAXSTRING], msgServeur[MAXSTRING];
 	//int vr = (int)(param);
 	int finDialogue=0, i, iCliTraite;
 	int temps, retRecv;
@@ -248,17 +254,12 @@ void * fctThread (void *param)
 							}
 							else printf("Send socket OK\n");
 
-							//fin de traitement, l'agent ne peut pas se logger
-							pthread_mutex_lock(&mutexIndiceCourant);
-							hSocketConnectee[iCliTraite]=-1;
-							close (hSocketServ);
-							pthread_mutex_unlock(&mutexIndiceCourant);
+							finDialogue = 1;
 						}
 						else
 						{
 							etatServ = 1; //le login est OK, le serv peut recv des autres requetes
 
-							//sprintf(trameServeur.requete,"LOGIN_OK");
 							sprintf(trameServeur.DATA.message,"Connexion acceptee !");
 
 							if (send(hSocketServ,&trameServeur, TAILLE_TRAME, 0) == -1)
@@ -299,11 +300,7 @@ void * fctThread (void *param)
 							}
 							else printf("Send socket OK\n");
 
-							//fin de traitement, l'agent ne peut pas se logger
-							pthread_mutex_lock(&mutexIndiceCourant);
-							hSocketConnectee[iCliTraite]=-1;
-							close (hSocketServ);
-							pthread_mutex_unlock(&mutexIndiceCourant);
+							finDialogue = 1;
 
 						}
 						else
@@ -361,7 +358,7 @@ void * fctThread (void *param)
 
 						poidsExcedent = poidsTotValises - (nbVal*20);
 
-						char ifPaye;
+						//char ifPaye;
 						if(poidsExcedent>0)
 						{
 							printf("Excedent poids : %.2f kg\n",poidsExcedent);
@@ -393,12 +390,13 @@ void * fctThread (void *param)
 
 						break;
 
+
 					case PAYMENT_DONE:
 
 						printf("Requete recue : PAYMENT_DONE\n");
 
-						printf("Num billet : %s\n",numBilletClient);
-						printf("Nb valises : %d\n",nbVal);
+						//printf("Num billet : %s\n",numBilletClient);
+						//printf("Nb valises : %d\n",nbVal);
 
 						saveValises(numBilletClient,valisesOrNot,nbVal);
 				};
@@ -410,7 +408,10 @@ void * fctThread (void *param)
 		pthread_mutex_lock(&mutexIndiceCourant);
 		hSocketConnectee[iCliTraite]=-1;
 		pthread_mutex_unlock(&mutexIndiceCourant);
+
+		printf("Fin de connexion au client actuel, attente d'une nouvelle connexion client \n");
 	}
+
 	close (hSocketServ);
 	return 0;
 }
@@ -567,3 +568,23 @@ void viderBuffIn()		//on récupère tous les caractères du buffer stdin
     }
 }
 
+/*
+void HandlerInt(int x)
+{
+
+	for(int i = 0; i<NB_MAX_CLIENTS;i++)
+	{
+		if(hSocketConnectee[i] != -1)
+		{
+			close(hSocketConnectee[i]);
+		}
+	}
+
+	close(hSocketEcoute);
+	close(hSocketService);
+
+	printf("ctrl-c reçu, fermeture du serveur \n");
+	exit(1);
+}
+
+*/

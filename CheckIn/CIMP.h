@@ -1,8 +1,10 @@
 #define MAXSTRING 100
 #define TAILLE_CHAMP 50
-#define PORT_CHCK 50000 /* Port d'ecoute de la socket serveur */
+#define NB_MAX_CLIENTS 2 /* Nombre maximum de clients connectes */
+#define EOC -1
+#define DOC "DENY_OF_CONNEXION"
 
-
+#define PORT_CHCK 50001 /* Port d'ecoute de la socket serveur */
 
 #define LOGIN_OFFICER 		1
 #define LOGOUT_OFFICER		2

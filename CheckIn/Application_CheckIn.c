@@ -14,10 +14,6 @@
 #include <pthread.h>
 #include "CIMP.h"
 
-#define NB_MAX_CLIENTS 2 /* Nombre maximum de clients connectes */
-//#define EOC "END_OF_CONNEXION"
-#define EOC -1
-#define DOC "DENY_OF_CONNEXION"
 
 struct trameCIMP trameClient;
 struct trameCIMP trameServeur;
@@ -34,7 +30,6 @@ int main()
 	int tailleSockaddr_in;
 	int ret; /* valeur de retour */
 	int retRecv;
-	char msgClient[MAXSTRING], msgServeur[MAXSTRING];
 	int cpt=0;
 
 	/* 1. Création de la socket */
@@ -117,7 +112,7 @@ int main()
 	do
 	{
 		//encodages des billets
-		
+
 		printf("\nVOL 362 POWDER-AIRLINES - Peshawar 6h30");
 
 		trameClient.requete = CHECK_TICKET;
