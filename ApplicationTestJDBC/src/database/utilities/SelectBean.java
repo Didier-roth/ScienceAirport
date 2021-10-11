@@ -5,7 +5,6 @@
  */
 package database.utilities;
 import java.sql.*;
-import java.beans.*;
 import java.io.Serializable;
 
 /**
@@ -20,6 +19,10 @@ public class SelectBean implements Serializable {
     private Class driver;
     private String table = null;
     private String condition = null;
+    private String host = null;
+    private String port;
+    private String id;
+    private String passwd;
     private ResultSet resultat;
     private Connection connexion;
     
@@ -103,16 +106,67 @@ public class SelectBean implements Serializable {
     public Connection getConnexion() {
         return connexion;
     }
-    
-    
-    public void init()
-    {
-        
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String bd) {
+        this.host = bd;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPasswd() {
+        return passwd;
+    }
+
+    public void setPasswd(String passwd) {
+        this.passwd = passwd;
     }
     
-    public void run()
+    public void init() throws ClassNotFoundException, SQLException
     {
-        
+        String co ="";
+        if(driver == Class.forName(SelectBean.MYSQL))
+        {
+            co = "jdbc:mysql://"+ getHost() + ":" + getPort() + "/BD_AIRPORT";
+        }
+        else
+        {
+            if(driver == Class.forName(SelectBean.ORACLE))
+            {
+                co = "jdbc:oracle:thin@" + getHost() + ":" + getPort() + ":BD_AIRPORT";
+            }
+        }
+        connexion = DriverManager.getConnection(co, this.getId(), this.getPasswd());
+    }
+    
+    public void run() throws SQLException
+    {
+        java.sql.Statement instruc = connexion.createStatement();
+        if(condition != null)
+        {
+            this.resultat = instruc.executeQuery("select * from stocks");
+        }
+        else
+        {
+            this.resultat = instruc.executeQuery("select * from " + this.getTable() + " where " + this.getCondition());
+        }
     }
     
 }
