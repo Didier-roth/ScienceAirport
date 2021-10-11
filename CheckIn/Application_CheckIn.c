@@ -47,7 +47,9 @@ int main()
 		printf("Erreur d'acquisition d'infos sur le host distant %d\n", errno);
 		exit(1);
 	}
-	else printf("Acquisition infos host distant OK\n");
+	else 
+		printf("Acquisition infos host distant OK\n");
+	
 	memcpy(&adresseIP, infosHost->h_addr, infosHost->h_length);
 	printf("Adresse IP = %s\n",inet_ntoa(adresseIP));
 
