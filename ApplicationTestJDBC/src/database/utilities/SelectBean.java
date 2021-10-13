@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class SelectBean implements Serializable {
         
     public static final String MYSQL = "com.mysql.jdbc.Driver";
-    public static final String ORACLE = "com.mysql.jdbc.Driver";
+    //public static final String ORACLE = "com.mysql.jdbc.Driver";
     
     private Class driver;
     private String table = null;
@@ -49,7 +49,9 @@ public class SelectBean implements Serializable {
      */
     public void setDriver(String driver) throws ClassNotFoundException 
     {
-            this.driver = Class.forName(driver);
+            this.driver = Class.forName(com.mysql.cj.jdbc.Driver);
+            
+    
     }
 
      
