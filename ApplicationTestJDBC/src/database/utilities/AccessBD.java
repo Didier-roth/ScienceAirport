@@ -9,17 +9,18 @@ import java.io.Serializable;
 public class AccessBD implements Serializable {
         
     public static final String MYSQL = "com.mysql.cj.jdbc.Driver";
-    //public static final String ORACLE = "com.mysql.jdbc.Driver";
-    
+    public static final String ORACLE = "oracle.jdbc.driver.OracleDriver";
     private Class driver;
     private String table = null;
     private String condition = null;
+    private String modifier = null;
     private String host = null;
     private String port;
     private String id;
     private String passwd;
     private ResultSet resultat;
     private Connection connexion;
+    private String bd;
     
     
     public AccessBD() 
@@ -133,12 +134,39 @@ public class AccessBD implements Serializable {
     public void setPasswd(String passwd) {
         this.passwd = passwd;
     }
+
+    public String getModif() {
+        return modifier;
+    }
+
+    public void setModif(String set) {
+        this.modifier = set;
+    }
+
+    public String getBd() {
+        return bd;
+    }
+
+    public void setBd(String bd) {
+        this.bd = bd;
+    }
+    
+    
     
     public void init() throws ClassNotFoundException, SQLException
     {
         String co ="";
      
-        co = "jdbc:mysql://"+getHost() + ":" + getPort() + "/bd_airport";
+        if(this.driver == Class.forName(MYSQL))
+        {
+            co = "jdbc:mysql://"+getHost() + ":" + getPort() + "/" + this.getBd();
+            System.out.println("driver mysql");
+        }
+        
+        if(this.driver == Class.forName(ORACLE))
+        {
+            System.out.println("driver oracle");
+        }
         
         connexion = DriverManager.getConnection(co, this.getId(), this.getPasswd());
     }
@@ -146,7 +174,7 @@ public class AccessBD implements Serializable {
     public void select() throws SQLException
     {
         java.sql.Statement instruc = connexion.createStatement();
-        if(condition == null)
+        if(condition.isEmpty())
         {
             this.resultat = instruc.executeQuery("select * from " + this.getTable());
             System.out.println("select * from " + this.getTable());
@@ -154,21 +182,40 @@ public class AccessBD implements Serializable {
         else
         {
             this.resultat = instruc.executeQuery("select * from " + this.getTable() + " where " + this.getCondition());
+            System.out.println("select * from " + this.getTable() + " where " + this.getCondition());
         }
     }
     
     public void count() throws SQLException
     {
         java.sql.Statement instruc = connexion.createStatement();
+        this.resultat = instruc.executeQuery("select count(*) from " + this.getTable());
+        System.out.println("select count(*) from " + this.getTable());
+    }
+    
+    public synchronized void update() throws SQLException  
+    {
+        java.sql.Statement instruc = connexion.createStatement();
+        
         if(condition == null)
         {
-            this.resultat = instruc.executeQuery("select count() from " + this.getTable());
-            System.out.println("select * from " + this.getTable());
+            this.resultat = instruc.executeQuery("UPDATE " + this.getTable() + " SET " + this.getModif());
+            System.out.println("UPDATE " + this.getTable() + " SET " + this.getModif());
         }
         else
         {
-            this.resultat = instruc.executeQuery("select * from " + this.getTable() + " where " + this.getCondition());
+            instruc.executeUpdate("UPDATE " + this.getTable() + " SET " + this.getModif() + " WHERE " + this.getCondition());
+            System.out.println("UPDATE " + this.getTable() + " SET " + this.getModif() + " WHERE " + this.getCondition());        
+
         }
+    }
+    
+    public void reset() throws SQLException
+    {
+        this.condition = null;
+        this.modifier = null;
+        this.table = null;
+        this.resultat = null;
     }
     
 }

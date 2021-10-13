@@ -33,6 +33,7 @@ public class APPLICATION_TEST_BEAN
             Logger.getLogger(APPLICATION_TEST_BEAN.class.getName()).log(Level.SEVERE, null, ex);
         }
        
+        bean.setBd("bd_airport");
          bean.setHost("localhost");
          bean.setId("student");
          bean.setPasswd("student1");
@@ -45,37 +46,43 @@ public class APPLICATION_TEST_BEAN
             Logger.getLogger(APPLICATION_TEST_BEAN.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        try {
+        try 
+        {
             bean.init();
-            bean.run();
+            bean.select();
             System.out.println("test apres run");
-        } catch (ClassNotFoundException ex) {
+        } 
+        catch (ClassNotFoundException ex) 
+        {
             Logger.getLogger(APPLICATION_TEST_BEAN.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(APPLICATION_TEST_BEAN.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-       try
+        try
+        {
+            int cpt = 0;
+            while(bean.getResultat().next())
             {
-         int cpt = 0;
-         while(bean.getResultat().next())
-         {
-            
                 if (cpt==0) 
                     System.out.println("Parcours du curseur"); 
                 cpt++;
-        
-                int id = bean.getResultat().getInt("RegIDAgent");
-                String nom = bean.getResultat().getString("nom");
-                String prenom = bean.getResultat().getString("prenom");
-                System.out.println(cpt + "\nid : " + id + "\nnom : " + nom + "\nprenom : " + prenom);
-            
-             
-         }
+//                int id = bean.getResultat().getInt("RegIDAgent");
+//                String nom = bean.getResultat().getString("nom");
+//                String prenom = bean.getResultat().getString("prenom");
+//                System.out.println(cpt + "\nid : " + id + "\nnom : " + nom + "\nprenom : " + prenom);
+                for(int i = 0; i < bean.getResultat().getMetaData().getColumnCount(); i++)
+                    System.out.println(bean.getResultat().getObject(i+1));
+                System.out.println();
+                
             }
+        }
        catch(Exception e)
         {
-                 
+            Logger.getLogger(APPLICATION_TEST_BEAN.class.getName()).log(Level.SEVERE, null, e);
         }
+       
     }
 }
