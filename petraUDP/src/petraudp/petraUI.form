@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="BacEntre" min="-2" max="-2" attributes="0"/>
+                  <Component id="Slot" min="-2" max="-2" attributes="0"/>
+                  <Component id="Epaisseur" min="-2" max="-2" attributes="0"/>
+                  <Component id="PositionBras" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="StatusChariot" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="CutOut2" min="-2" max="-2" attributes="0"/>
+                  <Component id="CutOut1" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="PositionPlongeur" min="-2" max="-2" attributes="0"/>
+                  <Component id="Capteur" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="C_CS" min="-2" max="-2" attributes="0"/>
+                          <Component id="C_S" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="Plongeur" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="Bras" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="C_L1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="conveyor1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="C_L2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="Conveyor2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="C_DE" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="C_T" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="Ventouse" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="C_AP" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="Grappin" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="C_PP" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="43" max="32767" attributes="0"/>
+                      <Component id="PositionChariot" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="Actuateur" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="A_CP_C1" pref="105" max="32767" attributes="0"/>
+                          <Component id="A_CP_BE" pref="0" max="32767" attributes="0"/>
+                          <Component id="A_GA_AG" alignment="0" max="32767" attributes="0"/>
+                          <Component id="A_PA_H" alignment="0" max="32767" attributes="0"/>
+                          <Component id="A_PV_ON" alignment="0" max="32767" attributes="0"/>
+                          <Component id="A_C2_ON" alignment="0" max="32767" attributes="0"/>
+                          <Component id="A_C1_ON" alignment="1" max="32767" attributes="0"/>
+                          <Component id="A_AA_C1" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="A_PA_B" alignment="1" max="32767" attributes="0"/>
+                          <Component id="A_PV_OFF" alignment="1" max="32767" attributes="0"/>
+                          <Component id="A_C2_OFF" alignment="1" max="32767" attributes="0"/>
+                          <Component id="A_C1_OFF" alignment="1" max="32767" attributes="0"/>
+                          <Component id="A_GA_LA" alignment="1" max="32767" attributes="0"/>
+                          <Component id="A_AA_C2" alignment="0" pref="106" max="32767" attributes="0"/>
+                          <Component id="A_CP_KO" alignment="0" max="32767" attributes="0"/>
+                          <Component id="A_CP_C2" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Actuateur" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Capteur" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="CutOut1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_C1_OFF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_C1_ON" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="C_L1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="conveyor1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="CutOut2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="C_L2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Conveyor2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_C2_ON" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_C2_OFF" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="C_T" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Ventouse" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="A_PV_ON" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="A_PV_OFF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="Epaisseur" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Plongeur" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="C_S" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Slot" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_PA_H" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_PA_B" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="StatusChariot" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="C_CS" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Bras" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_AA_C1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_AA_C2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="PositionBras" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="C_AP" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Grappin" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_GA_AG" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_GA_LA" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="PositionPlongeur" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="C_PP" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="PositionChariot" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_CP_BE" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_CP_KO" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="BacEntre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="C_DE" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_CP_C1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="A_CP_C2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="Capteur">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Capteurs"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Actuateur">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Actuateurs"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="CutOut1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cut Out 1 :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="conveyor1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Conveyor 1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="CutOut2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cut Out 2 :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="C_L1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel6"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="C_L2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel7"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Epaisseur">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Epaisseur :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="C_T">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel9"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Slot">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Slot :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="C_S">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel11"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="StatusChariot">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Chariot status"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="C_CS">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel13"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="PositionBras">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Position Bras :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="C_AP">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel15"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="PositionPlongeur">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Position Plongeur :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="C_PP">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel17"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="BacEntre">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Bac Entr&#xe9;e Vide :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="C_DE">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel19"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Conveyor2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Conveyor 2"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Ventouse">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ventouse"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Plongeur">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Plongeur"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Bras">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Bras"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Grappin">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Grappin"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="PositionChariot">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Position Chariot"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_C1_ON">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ON"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_C1_ONActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_C1_OFF">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="OFF"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_C1_OFFActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_C2_ON">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ON"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_C2_ONActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_C2_OFF">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="OFF"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_C2_OFFActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_PV_ON">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ON"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_PV_ONActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_PV_OFF">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="OFF"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_PV_OFFActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_PA_H">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Haut"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_PA_HActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_PA_B">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Bas"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_PA_BActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_AA_C1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tapis 1"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_AA_C1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_AA_C2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tapis 2"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_AA_C2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_GA_AG">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="agriper"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_GA_AGActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_GA_LA">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="lacher"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_GA_LAActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_CP_BE">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Bac Entr&#xe9;e"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_CP_BEActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_CP_KO">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Bac KO"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_CP_KOActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_CP_C1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tapis 1"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_CP_C1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="A_CP_C2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tapis 2"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A_CP_C2ActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>
