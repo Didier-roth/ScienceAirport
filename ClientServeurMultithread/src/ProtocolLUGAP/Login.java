@@ -15,6 +15,11 @@ public class Login implements Serializable
 {
     private String identifiant;
     private String password; 
+
+    @Override
+    public String toString() {
+        return "Login{" + "identifiant=" + identifiant + ", password=" + password + '}';
+    }
     
     public Login(String id, String pwd)
     {

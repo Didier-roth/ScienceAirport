@@ -9,6 +9,7 @@ import ProtocolLUGAP.*;
 import java.awt.Point;
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -175,11 +176,12 @@ public class FenApplication_Bagages extends javax.swing.JFrame {
         try 
         {
             oos = new ObjectOutputStream(cliSock.getOutputStream());
+            ois = new ObjectInputStream(cliSock.getInputStream());
             System.out.println("Applications bagages envoie son login/password :");
             oos.writeObject(lugap);
-            
-            ois = new ObjectInputStream(cliSock.getInputStream());
+           
             lugap = (LUGAP)ois.readObject();
+            System.out.println("lugap 184 " + lugap);
 
         } catch (IOException ex) {
             Logger.getLogger(FenApplication_Bagages.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,11 +191,28 @@ public class FenApplication_Bagages extends javax.swing.JFrame {
              
         if(lugap.getLoginStatus())
         {
-            dlm.addElement("VOL 362 POWDER-AIRLINES - Peshawar 6h30");
-            dlm.addElement("VOL 714 WALABIES-AIRLINES - Sydney 5h30");
-            dlm.addElement("VOL 152 AIR FRANCE CANAILLE - Paris 7h20");
-        
-            this.ListeVols.setModel(dlm); //on fait apparaitre la liste des vols
+            try
+            {   
+                //Vol v = new Vol();
+                //v = (Vol)ois.readObject();
+                lugap = (LUGAP) ois.readObject();
+               
+                while (lugap.getVol()!= null)
+                {
+                    System.out.println(lugap);
+                    dlm.addElement(lugap.getVol());
+                    lugap = (LUGAP) ois.readObject();
+                }
+                this.ListeVols.setModel(dlm);
+            } 
+            catch (IOException ex)
+            {
+                Logger.getLogger(FenApplication_Bagages.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+            catch (ClassNotFoundException ex) 
+            {
+                Logger.getLogger(FenApplication_Bagages.class.getName()).log(Level.SEVERE, null, ex);
+            }
             System.out.println("OK");
         }
         else
@@ -201,7 +220,6 @@ public class FenApplication_Bagages extends javax.swing.JFrame {
             System.out.println("Not OK");
             JOptionPane.showMessageDialog(this,"Login ou mot de passe incorrect","Connexion refusée",JOptionPane.ERROR_MESSAGE);
         }
-        // remplir ici les vols
         
         
         
@@ -214,9 +232,12 @@ public class FenApplication_Bagages extends javax.swing.JFrame {
                  Point pnt = evt.getPoint();
                  int row = ListeVols.getSelectedIndex();
                  System.out.println("index = " + row);
-                 String item = (String)ListeVols.getSelectedValue();
-                 System.out.println("value = " + item);
-                 DialBagages dial = new DialBagages(this,true); 
+                 Vol vol = (Vol) ListeVols.getSelectedValue();
+                 System.out.println("value = " + vol);
+                 
+                 
+                 
+                 DialBagages dial = new DialBagages(this,true,null); 
                  dial.setVisible(true);
                  //do something
              }

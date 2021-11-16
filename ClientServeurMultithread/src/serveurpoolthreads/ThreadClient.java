@@ -11,6 +11,11 @@ import ProtocolLUGAP.*;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import database.utilities.*;
+import java.beans.Beans;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  *
@@ -18,7 +23,7 @@ import java.util.logging.Logger;
  */
 
 public class ThreadClient extends Thread
-{
+{ 
     private SourceTaches clientsAGerer;
     private String nom;
     private Login login; //objet Login que le serv va recevoir
@@ -70,9 +75,9 @@ public class ThreadClient extends Thread
                 //lecture des informations recues
                 lugap = (LUGAP) ois.readObject();
                 
-                System.out.println("Objet reçu : ");
+                System.out.println("Objet reçu : " + lugap);
                 
-                lugap.getLogin().Affiche();
+               
                 
             } 
             catch (ClassNotFoundException | IOException e) {}
@@ -91,16 +96,66 @@ public class ThreadClient extends Thread
                 System.out.println("Login/Password not OK ! Connexion refusée");
                 lugap.setLoginStatus(Boolean.FALSE);
             }
-            
-            try {
+            try 
+            {
+                //send connexion Ok or not
+                System.out.println("avant envoie status : " + lugap);
                 oos.writeObject(lugap);
-            } catch (IOException ex) {
+                
+            } 
+            catch (IOException ex) 
+            {
                 Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
             }
              
             
-            
-            
+            if(lugap.getLoginStatus())
+            {
+                //envoie des Vols
+                AccessBD abd = null;
+                try {
+                    abd = (AccessBD) Beans.instantiate(null, "database.utilities.AccessBD");
+                    abd.setDriver(AccessBD.MYSQL);
+                    abd.setBd("bd_airport");
+                    abd.setHost("localhost");
+                    abd.setId("student");
+                    abd.setPasswd("student1");
+                    abd.setPort("3306");
+                    abd.init();
+                    abd.setTable("Vols");
+                    abd.setCondition("");
+                    abd.select();
+                    
+                    
+                    while(abd.getResultat().next())
+                    {
+                        lugap = new LUGAP();
+                        lugap.setNumRequete(LUGAP.INFO_VOL);
+                        Vol v = new Vol();
+                        v.setNumVol(abd.getResultat().getString(1));
+                        v.setDestination(abd.getResultat().getString(2));
+                        v.setHeureDepart(abd.getResultat().getDate(3));
+                        v.setHeureArrivee(abd.getResultat().getDate(4));
+                        v.setHeureArriveePrevue(abd.getResultat().getDate(5));
+                        v.setAvionID(abd.getResultat().getString(6));
+                        
+                        lugap.setVol(v);
+                        System.out.println("lugap = " + lugap);
+                        
+                        oos.writeObject(lugap);                        
+                    }
+                    lugap = new LUGAP();
+                    oos.writeObject(lugap);
+                } 
+                catch (IOException ex) {
+                    Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+                catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } 
         }
     }
 }

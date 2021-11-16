@@ -5,6 +5,11 @@
  */
 package clientpoolthreads;
 
+import ProtocolLUGAP.Bagage;
+import ProtocolLUGAP.Vol;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author murad
@@ -14,7 +19,7 @@ public class DialBagages extends javax.swing.JDialog {
     /**
      * Creates new form DialBagages
      */
-    public DialBagages(java.awt.Frame parent, boolean modal) {
+    public DialBagages(java.awt.Frame parent, boolean modal,ArrayList<Bagage> vols) {
         super(parent, modal);
         initComponents();
     }
@@ -103,7 +108,7 @@ public class DialBagages extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialBagages dialog = new DialBagages(new javax.swing.JFrame(), true);
+                DialBagages dialog = new DialBagages(new javax.swing.JFrame(), true,null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

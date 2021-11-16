@@ -6,7 +6,6 @@
 package ProtocolLUGAP;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *
@@ -15,7 +14,15 @@ import java.util.List;
 public class LUGAP implements Serializable
 {
     /* -_-_-_-_-_-_-_-_-_-_- construteur  -_-_-_-_-_-_-_-_-_*/
-    public LUGAP() {}
+    public LUGAP() 
+    {
+        this.NumVol = null;
+        this.bagages = null;
+        this.login = null;
+        this.loginstatus = null;
+        this.numRequete = 0;
+        this.vol = null;
+    }
 
     
     
@@ -44,10 +51,10 @@ public class LUGAP implements Serializable
     
     /* INFO BAGAGES */
     String NumVol;
-    private List<Bagage> bagages;
+    Bagage bagages;
     
     /* INFO VOL */
-    private List<Vol> vols;
+    Vol vol;
     
     /* -_-_-_-_-_-_-_-_-_-_- setter getter  -_-_-_-_-_-_-_-_-_*/
     public int getNumRequete() {
@@ -58,22 +65,6 @@ public class LUGAP implements Serializable
         this.numRequete = numRequete;
     }
 
-    public List<Bagage> getBagages() {
-        return bagages;
-    }
-
-    public void setBagages(List<Bagage> bagages) {
-        this.bagages = bagages;
-    }
-
-    public List<Vol> getVols() {
-        return vols;
-    }
-
-    public void setVols(List<Vol> vols) {
-        this.vols = vols;
-    }
-    
     public Boolean getLoginStatus() {
         return loginstatus;
     }
@@ -97,8 +88,21 @@ public class LUGAP implements Serializable
     public void setNumVol(String NumVol) {
         this.NumVol = NumVol;
     }
+
+    public Vol getVol() {
+        return vol;
+    }
+
+    public void setVol(Vol vol) {
+        this.vol = vol;
+    }
       
     /* -_-_-_-_-_-_-_-_-_-_- methodes  -_-_-_-_-_-_-_-_-_*/
+
+    @Override
+    public String toString() {
+        return "LUGAP{" + "numRequete=" + numRequete + ", loginstatus=" + loginstatus + ", login=" + login + ", NumVol=" + NumVol + ", bagages=" + bagages + ", vol=" + vol + '}';
+    }
 }
 
 

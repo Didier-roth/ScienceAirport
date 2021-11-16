@@ -206,7 +206,7 @@ public class FenServeur_Bagages extends javax.swing.JFrame implements ConsoleSer
         while (parser.hasMoreTokens())
             ligne.add(parser.nextToken());
         
-        DefaultTableModel dtm = (DefaultTableModel)TableauEvenements.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) this.TableauEvenements.getModel();
         dtm.insertRow(dtm.getRowCount(),ligne);
     }
 
