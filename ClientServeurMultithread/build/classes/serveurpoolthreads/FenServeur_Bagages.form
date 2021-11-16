@@ -137,6 +137,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="stop"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BStopActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
@@ -158,7 +161,7 @@
         <Component class="javax.swing.JTable" name="TableauEvenements">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="3" rowCount="4">
+              <Table columnCount="3" rowCount="0">
                 <Column editable="true" title="Origine" type="java.lang.Object"/>
                 <Column editable="true" title="Requ&#xea;te" type="java.lang.Object"/>
                 <Column editable="true" title="Thread" type="java.lang.Object"/>

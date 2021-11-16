@@ -6,6 +6,7 @@
 package ProtocolLUGAP;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,6 +24,28 @@ public class LUGAP implements Serializable
         this.numRequete = 0;
         this.vol = null;
     }
+    
+    public LUGAP(String numVol) 
+    {
+        this.NumVol = numVol;
+        this.bagages = null;
+        this.login = null;
+        this.loginstatus = null;
+        this.numRequete = 1;
+        this.vol = null;
+    }
+    
+    public LUGAP(Vol vol) 
+    {
+        this.NumVol = null;
+        this.bagages = null;
+        this.login = null;
+        this.loginstatus = null;
+        this.numRequete = 2;
+        this.vol = vol;
+    }
+    
+    
 
     
     
@@ -35,9 +58,9 @@ public class LUGAP implements Serializable
     /* -_-_-_-_-_-_-_-_-_-_- static  -_-_-_-_-_-_-_-_-_*/
     public static int LOGIN = 0;
     
-    public static int INFO_BAGAGES = 1;
+    public static int INFO_VOL = 1;
  
-    public static int INFO_VOL = 2;
+    public static int INFO_BAGAGES = 2;
     
     
     
@@ -51,7 +74,7 @@ public class LUGAP implements Serializable
     
     /* INFO BAGAGES */
     String NumVol;
-    Bagage bagages;
+    ArrayList<Bagage> bagages;
     
     /* INFO VOL */
     Vol vol;
@@ -96,6 +119,16 @@ public class LUGAP implements Serializable
     public void setVol(Vol vol) {
         this.vol = vol;
     }
+
+    public ArrayList<Bagage> getBagages() {
+        return bagages;
+    }
+
+    public void setBagages(ArrayList<Bagage> bagages) {
+        this.bagages = bagages;
+    }
+    
+    
       
     /* -_-_-_-_-_-_-_-_-_-_- methodes  -_-_-_-_-_-_-_-_-_*/
 

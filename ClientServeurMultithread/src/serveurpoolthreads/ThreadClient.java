@@ -28,6 +28,11 @@ public class ThreadClient extends Thread
     private String nom;
     private Login login; //objet Login que le serv va recevoir
     private LUGAP lugap;
+    private int statemachine;
+    
+    private static int NOTLOGED = 0;
+    private static int LOGINOK = 1;
+    private static int VOLOK = 2;
     
     ObjectInputStream ois = null;
     ObjectOutputStream oos = null;
@@ -49,113 +54,191 @@ public class ThreadClient extends Thread
     }
     public void run()
     {
+        try
+        {
+            System.out.println("Tread client avant getClient");
+            socketClient = clientsAGerer.getClient();
+            System.out.println("test");
+        }
+        catch (InterruptedException e)
+        {
+            System.out.println("Interruption : " + e.getMessage());
+        }
+        
+        System.out.println("Le thread : " + nom + " vient d'etre associé a un client sur la socket : " + socketClient);
+            
+        System.out.println("Attente d'une connexion..");
+        
+        try {
+            ois = new ObjectInputStream(socketClient.getInputStream());
+            oos = new ObjectOutputStream(socketClient.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.statemachine = ThreadClient.NOTLOGED;
+        
         while (!isInterrupted())
         {
-            try
-            {
-                System.out.println("Tread client avant getClient");
-                socketClient = clientsAGerer.getClient();
-            }
-            catch (InterruptedException e)
-            {
-                System.out.println("Interruption : " + e.getMessage());
-            }
+
             
             //System.out.println("run de tachesencours");
             //tacheEnCours.run();
-            
-            System.out.println("Le thread : " + nom + " vient d'etre associé a un client sur la socket : " + socketClient);
-            
-            System.out.println("Attente d'une connexion..");
-            
             try 
             {
-                ois = new ObjectInputStream(socketClient.getInputStream());
-                oos = new ObjectOutputStream(socketClient.getOutputStream());
                 //lecture des informations recues
+                lugap.setNumRequete(10);
                 lugap = (LUGAP) ois.readObject();
-                
-                System.out.println("Objet reçu : " + lugap);
-                
-               
-                
+                System.out.println("\t tc - Objet reçu : " + lugap);
             } 
-            catch (ClassNotFoundException | IOException e) {}
-            
-            
-            
-            System.out.println("## Le serveur test si les identifiants reçus sont corrects ## ");
-            
-            if(tableLoginPwd.get(lugap.getLogin().getIdentifiant()) != null && tableLoginPwd.get(lugap.getLogin().getIdentifiant()).equals(lugap.getLogin().getPassword())) 
+            catch (ClassNotFoundException | IOException e) 
             {
-                System.out.println("Login/Password OK ! Connexion acceptée");
-                lugap.setLoginStatus(Boolean.TRUE);
+                this.interrupt();
             }
-            else
-            {
-                System.out.println("Login/Password not OK ! Connexion refusée");
-                lugap.setLoginStatus(Boolean.FALSE);
-            }
-            try 
-            {
-                //send connexion Ok or not
-                System.out.println("avant envoie status : " + lugap);
-                oos.writeObject(lugap);
-                
-            } 
-            catch (IOException ex) 
-            {
-                Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             
             
-            if(lugap.getLoginStatus())
+            switch(lugap.getNumRequete())
             {
-                //envoie des Vols
-                AccessBD abd = null;
-                try {
-                    abd = (AccessBD) Beans.instantiate(null, "database.utilities.AccessBD");
-                    abd.setDriver(AccessBD.MYSQL);
-                    abd.setBd("bd_airport");
-                    abd.setHost("localhost");
-                    abd.setId("student");
-                    abd.setPasswd("student1");
-                    abd.setPort("3306");
-                    abd.init();
-                    abd.setTable("Vols");
-                    abd.setCondition("");
-                    abd.select();
+                case 0:
+                {
+                    System.out.println("\t tc - authentificcation");
+                    //place la machine a etat a l'etat initial (reconnexion ou premiere connexion)
+                    this.statemachine = ThreadClient.NOTLOGED;
                     
-                    
-                    while(abd.getResultat().next())
+                    System.out.println("\t 0 ->tc- ## Le serveur test si les identifiants reçus sont corrects ## ");
+            
+                    if(tableLoginPwd.get(lugap.getLogin().getIdentifiant()) != null && tableLoginPwd.get(lugap.getLogin().getIdentifiant()).equals(lugap.getLogin().getPassword())) 
                     {
-                        lugap = new LUGAP();
-                        lugap.setNumRequete(LUGAP.INFO_VOL);
-                        Vol v = new Vol();
-                        v.setNumVol(abd.getResultat().getString(1));
-                        v.setDestination(abd.getResultat().getString(2));
-                        v.setHeureDepart(abd.getResultat().getDate(3));
-                        v.setHeureArrivee(abd.getResultat().getDate(4));
-                        v.setHeureArriveePrevue(abd.getResultat().getDate(5));
-                        v.setAvionID(abd.getResultat().getString(6));
-                        
-                        lugap.setVol(v);
-                        System.out.println("lugap = " + lugap);
-                        
-                        oos.writeObject(lugap);                        
+                        System.out.println("\t 0->tc - Login/Password OK ! Connexion acceptée");
+                        lugap.setLoginStatus(Boolean.TRUE);
                     }
-                    lugap = new LUGAP();
-                    oos.writeObject(lugap);
-                } 
-                catch (IOException ex) {
-                    Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
-                } 
-                catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
+                    else
+                    {
+                        System.out.println("\t 0->tc - Login/Password not OK ! Connexion refusée");
+                        lugap.setLoginStatus(Boolean.FALSE);
+                    }
+                    try 
+                    {
+                        //send connexion Ok or not
+                        oos.writeObject(lugap);
+                        this.statemachine = ThreadClient.LOGINOK;
+
+                    } 
+                    catch (IOException ex) 
+                    {
+                        Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
                 }
-            } 
+                    
+                case 1:
+                {
+                    System.out.println("\t tc - envoi des vols");
+                    if(this.statemachine == ThreadClient.LOGINOK)
+                    {
+                        //envoie des Vols
+                        AccessBD abd = null;
+                        try {
+                            abd = (AccessBD) Beans.instantiate(null, "database.utilities.AccessBD");
+                            abd.setDriver(AccessBD.MYSQL);
+                            abd.setBd("bd_airport");
+                            abd.setHost("localhost");
+                            abd.setId("student");
+                            abd.setPasswd("student1");
+                            abd.setPort("3306");
+                            abd.init();
+                            abd.setTable("Vols");
+                            abd.setCondition("");
+                            abd.select();
+
+
+                            while(abd.getResultat().next())
+                            {
+                                lugap = new LUGAP();
+                                lugap.setNumRequete(LUGAP.INFO_VOL);
+                                Vol v = new Vol();
+                                v.setNumVol(abd.getResultat().getString(1));
+                                v.setDestination(abd.getResultat().getString(2));
+                                v.setHeureDepart(abd.getResultat().getDate(3));
+                                v.setHeureArrivee(abd.getResultat().getDate(4));
+                                v.setHeureArriveePrevue(abd.getResultat().getDate(5));
+                                v.setAvionID(abd.getResultat().getString(6));
+
+                                lugap.setVol(v);
+
+                                oos.writeObject(lugap);                        
+                            }
+                            lugap = new LUGAP();
+                            oos.writeObject(lugap);
+                            this.statemachine = ThreadClient.VOLOK;
+                        } 
+                        catch (IOException ex) {
+                            Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
+                        } 
+                        catch (ClassNotFoundException ex) 
+                        {
+                            Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
+                        } 
+                        catch (SQLException ex) 
+                        {
+                            Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    break;
+                }
+                
+                case 2:
+                {
+                    if(this.statemachine == ThreadClient.VOLOK)
+                    {
+                        System.out.println("\t tc - bagages");
+                        
+                        AccessBD abd = null;
+                        try {
+                            abd = (AccessBD) Beans.instantiate(null, "database.utilities.AccessBD");
+                            abd.setDriver(AccessBD.MYSQL);
+                            abd.setBd("bd_airport");
+                            abd.setHost("localhost");
+                            abd.setId("student");
+                            abd.setPasswd("student1");
+                            abd.setPort("3306");
+                            abd.init();
+                            abd.setTable("bagage");
+                            abd.setCondition("NumBillet IN (select NumBillet from Billet where NumVol like '" + lugap.getNumVol() + "')");
+                            abd.select();
+
+                            lugap = new LUGAP();
+                            lugap.setNumRequete(LUGAP.INFO_BAGAGES);
+                            ArrayList<Bagage> arb = new ArrayList<>(); 
+                            lugap.setBagages(arb);
+                            
+                            while(abd.getResultat().next())
+                            {
+                                Bagage b = new Bagage();
+                                b.setBagageID(abd.getResultat().getString(1));
+                                b.setPoid(abd.getResultat().getInt(2));
+                                b.setTypeBagages(abd.getResultat().getString(3));
+                                b.setRegIDAgent(abd.getResultat().getInt(4));
+                                b.setNumBillet(abd.getResultat().getString(5));
+                                
+                                lugap.getBagages().add(b);  
+                                System.out.println("bagage : " + b);
+                            }
+                            oos.writeObject(lugap);
+                            this.statemachine = ThreadClient.VOLOK;
+                        } catch (IOException ex) {
+                            Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(ThreadClient.class.getName()).log(Level.SEVERE, null, ex);
+                        } 
+                    }
+                    break;
+                }
+                
+                default :
+                    break;
+            }    
         }
     }
 }

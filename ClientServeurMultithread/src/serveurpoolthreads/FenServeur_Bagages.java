@@ -5,6 +5,7 @@
  */
 package serveurpoolthreads;
 
+import java.awt.Color;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -22,11 +23,12 @@ public class FenServeur_Bagages extends javax.swing.JFrame implements ConsoleSer
      * Creates new form FenAppServeur
      */
     private int port;
-    
+    private ThreadServeur ts;
     public FenServeur_Bagages() {
         setTitle("Serveur_Bagages");
         initComponents();
         TraceEvenements("serveur#initialisation#main");
+        
     }
 
     /**
@@ -78,16 +80,18 @@ public class FenServeur_Bagages extends javax.swing.JFrame implements ConsoleSer
         });
 
         BStop.setText("stop");
+        BStop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BStopActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Clients");
 
         TableauEvenements.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Origine", "Requête", "Thread"
@@ -156,9 +160,17 @@ public class FenServeur_Bagages extends javax.swing.JFrame implements ConsoleSer
         // TODO add your handling code here:
         port = Integer.parseInt(TFPort.getText());
         TraceEvenements("serveur#acquisition du port#main");
-        ThreadServeur ts = new ThreadServeur(port, new ListeTaches(), this); //ListeTaches est un objet implémentant SourcesTaches
+        ts = new ThreadServeur(port, new ListeTaches(), this); //ListeTaches est un objet implémentant SourcesTaches
         ts.start();
+        BStart.setBackground(Color.green);
     }//GEN-LAST:event_BStartActionPerformed
+
+    private void BStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BStopActionPerformed
+        // TODO add your handling code here:
+        TraceEvenements("serveur#Stop#main");
+        ts.interrupt();
+        
+    }//GEN-LAST:event_BStopActionPerformed
 
     /**
      * @param args the command line arguments

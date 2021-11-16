@@ -17,5 +17,52 @@ public class Bagage implements Serializable
     int poid;
     String typeBagages;
     int RegIDAgent;
+    String NumBillet;
+
+    public String getBagageID() {
+        return BagageID;
+    }
+
+    public void setBagageID(String BagageID) {
+        this.BagageID = BagageID;
+    }
+
+    public int getPoid() {
+        return poid;
+    }
+
+    public void setPoid(int poid) {
+        this.poid = poid;
+    }
+
+    public String getTypeBagages() {
+        return typeBagages;
+    }
+
+    public void setTypeBagages(String typeBagages) {
+        this.typeBagages = typeBagages;
+    }
+
+    public int getRegIDAgent() {
+        return RegIDAgent;
+    }
+
+    public void setRegIDAgent(int RegIDAgent) {
+        this.RegIDAgent = RegIDAgent;
+    }
+
+    public String getNumBillet() {
+        return NumBillet;
+    }
+
+    public void setNumBillet(String NumBillet) {
+        this.NumBillet = NumBillet;
+    }
+
+    @Override
+    public String toString() {
+        return "Bagage{" + "BagageID=" + BagageID + ", poid=" + poid + ", typeBagages=" + typeBagages + ", RegIDAgent=" + RegIDAgent + ", NumBillet=" + NumBillet + '}';
+    }
+    
     
 }

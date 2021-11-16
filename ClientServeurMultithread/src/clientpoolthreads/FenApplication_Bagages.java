@@ -168,11 +168,11 @@ public class FenApplication_Bagages extends javax.swing.JFrame {
         
         
         //ici on devra envoyer un objet Login sur le réseau
-        
         Login login = new Login(TFLogin.getText(),TFPassword.getText());
         login.Affiche();
         lugap.setLogin(login);
         lugap.getLogin().Affiche();
+        lugap.setNumRequete(LUGAP.LOGIN);
         try 
         {
             oos = new ObjectOutputStream(cliSock.getOutputStream());
@@ -181,7 +181,6 @@ public class FenApplication_Bagages extends javax.swing.JFrame {
             oos.writeObject(lugap);
            
             lugap = (LUGAP)ois.readObject();
-            System.out.println("lugap 184 " + lugap);
 
         } catch (IOException ex) {
             Logger.getLogger(FenApplication_Bagages.class.getName()).log(Level.SEVERE, null, ex);
@@ -193,10 +192,13 @@ public class FenApplication_Bagages extends javax.swing.JFrame {
         {
             try
             {   
-                //Vol v = new Vol();
-                //v = (Vol)ois.readObject();
+                //envoie de la requete VOL
+                lugap = new LUGAP();
+                lugap.setNumRequete(LUGAP.INFO_VOL);
+                oos.writeObject(lugap);
+                
+                //reception des VOLS
                 lugap = (LUGAP) ois.readObject();
-               
                 while (lugap.getVol()!= null)
                 {
                     System.out.println(lugap);
@@ -228,22 +230,48 @@ public class FenApplication_Bagages extends javax.swing.JFrame {
 
     private void ListeVolsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListeVolsMouseClicked
         // TODO add your handling code here:
-        if (evt.getClickCount() == 2) {
-                 Point pnt = evt.getPoint();
-                 int row = ListeVols.getSelectedIndex();
-                 System.out.println("index = " + row);
-                 Vol vol = (Vol) ListeVols.getSelectedValue();
-                 System.out.println("value = " + vol);
-                 
-                 
-                 
-                 DialBagages dial = new DialBagages(this,true,null); 
-                 dial.setVisible(true);
-                 //do something
-             }
-             else {
-                 //do something else
-             }
+        if (evt.getClickCount() == 2) 
+        {
+            int row = ListeVols.getSelectedIndex();
+            System.out.println("index = " + row);
+            Vol vol = (Vol) ListeVols.getSelectedValue();
+            System.out.println("value = " + vol);
+
+            lugap = new LUGAP();
+            lugap.setNumVol(vol.getNumVol());
+            lugap.setNumRequete(LUGAP.INFO_BAGAGES);
+            
+            try 
+            {
+                oos.writeObject(lugap);
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(FenApplication_Bagages.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+            try 
+            {
+                lugap = (LUGAP) ois.readObject();
+                
+                if(lugap.getBagages() != null && !(lugap.getBagages().isEmpty()))
+                {
+                    DialBagages dial = new DialBagages(this,true,lugap.getBagages()); 
+                    dial.setVisible(true);
+                }
+                
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(FenApplication_Bagages.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+            catch (ClassNotFoundException ex) 
+            {
+                Logger.getLogger(FenApplication_Bagages.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+             //do something
+        }
     }//GEN-LAST:event_ListeVolsMouseClicked
 
     

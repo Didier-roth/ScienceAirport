@@ -9,6 +9,8 @@ import ProtocolLUGAP.Bagage;
 import ProtocolLUGAP.Vol;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,9 +21,26 @@ public class DialBagages extends javax.swing.JDialog {
     /**
      * Creates new form DialBagages
      */
+    DefaultTableModel dtm ;
     public DialBagages(java.awt.Frame parent, boolean modal,ArrayList<Bagage> vols) {
         super(parent, modal);
         initComponents();
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        
+        
+        for(Bagage bg : vols)
+        {
+            Vector rowdata = new Vector();
+            rowdata.add(bg.getBagageID());
+            rowdata.add(bg.getPoid());
+            rowdata.add(bg.getTypeBagages());
+            rowdata.add(bg.getRegIDAgent());
+            rowdata.add(bg.getNumBillet());
+            dtm.addRow(rowdata);
+        }
+        
+        jTable1.setModel(dtm);
+       
     }
 
     /**
@@ -41,15 +60,27 @@ public class DialBagages extends javax.swing.JDialog {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Identifiant", "Poids", "Type", "Réceptionné (O/N)", "Chargé en soute (O/N))", "Vérifié par la douane (O/N)", "Remarques"
+                "Identifiant", "Poids", "Type", "RegIdAgent", "Billet"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setText("Bagages enregistrées pour ce vol ");
