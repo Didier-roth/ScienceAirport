@@ -1,0 +1,10 @@
+#
+#Wed Dec 08 14:20:37 CET 2021
+ttls=true
+password= Hepl2021Test
+email=testapplicinpres@gmail.com
+smtp.port=587
+authentication=true
+smtp.server=smtp.gmail.com
+pop3.port=995
+pop3.server=pop.gmail.com
